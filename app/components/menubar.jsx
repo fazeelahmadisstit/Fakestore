@@ -1,16 +1,15 @@
 'use client';
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { IoHome } from "react-icons/io5";
 import { MdCategory, MdShop2, MdContacts, MdOutlineLogin } from "react-icons/md";
 import { FaShoppingCart } from "react-icons/fa";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import LogInSignUp from "../login/LogInSignUp";
-import AllCategoryProducts from "../components/AllCategoryProducts"; // make sure this path is correct
+
 
 export default function MenuBar() {
   const [toggle, setToggle] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  const [cartItems, setCartItems] = useState([]); // Track the cart items
+  const [cartItems, setCartItems] = useState([]);
   const [isScrolled, setIsScrolled] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showCategory, setShowCategory] = useState(false);
@@ -27,17 +26,22 @@ export default function MenuBar() {
   };
 
   const addToCart = (item) => {
-    setCartItems(prevItems => {
-      const existing = prevItems.find(i => i.id === item.id);
+    setCartItems((prevItems) => {
+      const existing = prevItems.find((i) => i.id === item.id);
       if (existing) {
-        return prevItems.map(i => i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i);
+        return prevItems.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+        );
       } else {
         return [...prevItems, { ...item, quantity: 1 }];
       }
     });
   };
 
-  const cartCount = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0); // Calculate the cart count
+  const cartCount = cartItems.reduce(
+    (sum, item) => sum + (item.quantity || 1),
+    0
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,26 +58,57 @@ export default function MenuBar() {
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
   }, [toggle]);
 
   return (
-    <div className={`sticky top-0 z-40 p-3 md:p-4 transition-all duration-300 ${isScrolled ? "bg-white shadow-md" : "bg-gray-100"}`}>
+    <div
+      className={`sticky top-0 z-40 p-3 md:p-4 transition-all duration-300 ${
+        isScrolled ? "bg-white shadow-md" : "bg-gray-100"
+      }`}
+    >
       <div className="max-w-[1240px] flex justify-between items-center mx-auto">
         {/* Logo */}
         <div className="flex items-center font-bold gap-2 hover:opacity-80 cursor-pointer">
-          <img src="/images/logo.png" alt="Shoppee Logo" className="h-10 md:h-12 w-auto" width={48} height={48} />
-          <h1 className="text-3xl md:text-3xl font-bold">Shoppee</h1>
+          <img
+            src="/images/logo.png"
+            alt="Paklet Logo"
+            className="h-10 md:h-12 w-auto"
+            width={48}
+            height={48}
+          />
+          <h1 className="text-3xl font-bold">Paklet</h1>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:block">
           <ul className="flex text-black gap-x-8 lg:gap-x-14 items-center text-sm lg:text-base">
-            <li><button onClick={handleGoBack} className="flex items-center gap-1 hover:text-orange-500 transition-colors"><IoHome /> Home</button></li>
-            <li><button onClick={() => handleCategoryClick('men')} className="flex items-center gap-1 hover:text-orange-500 transition-colors"><MdCategory /> Men</button></li>
-            <li><button onClick={() => handleCategoryClick('women')} className="flex items-center gap-1 hover:text-orange-500 transition-colors"><MdShop2 /> Women</button></li>
-            <li><button onClick={() => handleCategoryClick('kids')} className="flex items-center gap-1 hover:text-orange-500 transition-colors"><MdContacts /> Kids</button></li>
-            <li><button onClick={() => alert('Contact section coming soon')} className="flex items-center gap-1 hover:text-orange-500 transition-colors"><MdContacts /> Contact</button></li>
+            <li>
+              <button
+                onClick={handleGoBack}
+                className="flex items-center gap-1 hover:text-orange-500 transition-colors"
+              >
+                <IoHome /> Home
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => handleCategoryClick("men")}
+                className="flex items-center gap-1 hover:text-orange-500 transition-colors"
+              >
+                <MdCategory /> Category
+              </button>
+            </li>
+           
+            <li>
+              <button
+                onClick={() => alert("Contact section coming soon")}
+                className="flex items-center gap-1 hover:text-orange-500 transition-colors"
+              >
+                <MdContacts /> Contact
+              </button>
+            </li>
           </ul>
         </nav>
 
@@ -100,21 +135,55 @@ export default function MenuBar() {
             onClick={() => setToggle(!toggle)}
             aria-label="Toggle menu"
           >
-            {toggle ? <AiOutlineClose className="text-black text-2xl" /> : <AiOutlineMenu className="text-black text-2xl" />}
+            {toggle ? (
+              <AiOutlineClose className="text-black text-2xl" />
+            ) : (
+              <AiOutlineMenu className="text-black text-2xl" />
+            )}
           </button>
         </div>
       </div>
 
       {/* Mobile Navigation */}
-      <div className={`mobile-menu fixed top-0 right-0 w-[250px] h-50 bg-gray-200 text-black flex flex-col items-start pt-10 px-6 transition-transform duration-300 z-50 ${toggle ? "translate-x-0" : "translate-x-full"}`}>
+      <div
+        className={`mobile-menu fixed top-0 right-0 w-[250px] h-[100vh] bg-gray-200 text-black flex flex-col items-start pt-10 px-6 transition-transform duration-300 z-50 ${
+          toggle ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
         <ul className="flex flex-col gap-4 w-full">
-          <li><button onClick={handleGoBack} className="flex items-center gap-2 hover:text-orange-500 transition-colors py-2"><IoHome size={18} /> Home</button></li>
-          <li><button onClick={() => handleCategoryClick('men')} className="flex items-center gap-2 hover:text-orange-500 transition-colors py-2"><MdCategory size={18} /> Men</button></li>
-          <li><button onClick={() => handleCategoryClick('women')} className="flex items-center gap-2 hover:text-orange-500 transition-colors py-2"><MdShop2 size={18} /> Women</button></li>
-          <li><button onClick={() => handleCategoryClick('kids')} className="flex items-center gap-2 hover:text-orange-500 transition-colors py-2"><MdContacts size={18} /> Kids</button></li>
-          <li><button onClick={() => alert('Contact section coming soon')} className="flex items-center gap-2 hover:text-orange-500 transition-colors py-2"><MdContacts size={18} /> Contact</button></li>
           <li>
-            <button className="flex items-center gap-2 hover:text-orange-500 transition-colors py-2" onClick={() => { setShowLogin(true); setToggle(false); }}>
+            <button
+              onClick={handleGoBack}
+              className="flex items-center gap-2 hover:text-orange-500 transition-colors py-2"
+            >
+              <IoHome size={18} /> Home
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => handleCategoryClick("men")}
+              className="flex items-center gap-2 hover:text-orange-500 transition-colors py-2"
+            >
+              <MdCategory size={18} /> Category
+            </button>
+          </li>
+          
+          <li>
+            <button
+              onClick={() => alert("Contact section coming soon")}
+              className="flex items-center gap-2 hover:text-orange-500 transition-colors py-2"
+            >
+              <MdContacts size={18} /> Contact
+            </button>
+          </li>
+          <li>
+            <button
+              className="flex items-center gap-2 hover:text-orange-500 transition-colors py-2"
+              onClick={() => {
+                setShowLogin(true);
+                setToggle(false);
+              }}
+            >
               <MdOutlineLogin size={18} /> Login
             </button>
           </li>
@@ -146,7 +215,10 @@ export default function MenuBar() {
           >
             Go Back to Home
           </button>
-          <AllCategoryProducts category={selectedCategory} addToCart={addToCart} />
+          <AllCategoryProducts
+            category={selectedCategory}
+            addToCart={addToCart}
+          />
         </div>
       )}
     </div>

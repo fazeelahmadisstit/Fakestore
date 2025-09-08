@@ -1,10 +1,13 @@
 "use client";
 import Link from "next/link";
 import products from "@/app/data/products.json"; // ✅ default import for JSON
+import MenuBar from "../components/menubar";
 
 export default function Products() {
   return (
-    <div className="p-6">
+    <>
+      <MenuBar />
+      <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">🛍️ Product List</h1>
         <Link
@@ -36,5 +39,6 @@ export default function Products() {
         ))}
       </div>
     </div>
+    </>
   );
 }
