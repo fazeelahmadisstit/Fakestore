@@ -72,7 +72,7 @@ export default function MenuBar() {
         {/* Logo */}
         <div className="flex items-center font-bold gap-2 hover:opacity-80 cursor-pointer">
           <img
-            src="/images/logo.png"
+            src="/images/logo.jpg"
             alt="Paklet Logo"
             className="h-10 md:h-12 w-auto"
             width={48}
