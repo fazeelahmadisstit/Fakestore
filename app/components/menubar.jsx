@@ -74,7 +74,7 @@ export default function MenuBar() {
           <img
             src="/images/logo.jpg"
             alt="Paklet Logo"
-            className="h-10 md:h-12 w-auto"
+            className="h-20 md:h-12 w-auto"
             width={48}
             height={48}
           />
