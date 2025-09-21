@@ -1,10 +1,9 @@
-import Link from "next/link"
-import Products from "./products/page"
-export default function Home(){
-	return(
-		<>
-		
-		<Products/>
-		</>
-	)
+import Products from "./products/page.jsx";
+
+export default function Home() {
+  return (
+    <>
+      <Products />
+    </>
+  );
 }
